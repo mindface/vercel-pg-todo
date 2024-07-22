@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Todo } from "@/model/Todo";
 
 type Props = {
@@ -10,8 +10,8 @@ type Props = {
 
 export default function TodoForm(props: Props) {
   const { type, item, getTodosAction } = props;
-  const [title,setTitle] = useState("");
-  const [body,setBody] = useState("");
+  const [title,setTitle] = useState(item?.title ?? "");
+  const [body,setBody] = useState(item?.body ?? "");
   const _getTodosAction = (getTodosAction ?? (() => {}));
 
   const addAction = async () => {
@@ -61,18 +61,10 @@ export default function TodoForm(props: Props) {
     }
   };
 
-  
-  useEffect(() => {
-    if(type === "update" && item) {
-      setTitle(item?.title);
-      setBody(item?.body);
-    }
-  },[]);
-
   return (
     <div className="todo-item flex item-end justify-between bg-white p-4 border border-slate-200">
-      <input type="text" className="input p-2 border" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <input type="text" className="input p-2 border" value={body} onChange={(e) => setBody(e.target.value)} />
+      <input type="text" className="input p-2 border text-neutral-900" value={title} onChange={(e) => setTitle(e.target.value)} />
+      <input type="text" className="input p-2 border text-neutral-900" value={body} onChange={(e) => setBody(e.target.value)} />
       { type === "add" && <button type="button" className="p-2 bg-blue-500 text-white" onClick={addAction}>追加</button>}
       { type !== "add" && <button type="button" className="p-2 bg-yellow-400 text-white" onClick={updateAction}>更新</button>}
       { type !== "add" && <button type="button" className="p-2 bg-pink-800 text-white" onClick={deleteAction}>削除</button>}      

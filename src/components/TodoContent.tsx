@@ -12,7 +12,6 @@ export default function TodoContent() {
       method: "GET"
     });
     const resValue = await res.json();
-    console.log(resValue.todos);
     setTodos(resValue.todos);
   }
 

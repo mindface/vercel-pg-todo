@@ -14,3 +14,6 @@ pnpm dev
 bun dev
 ```
 # vercel-pg-todo
+
+prismaとvercelのstorageを使用したtodoアプリ
+連携の学習用に使用
