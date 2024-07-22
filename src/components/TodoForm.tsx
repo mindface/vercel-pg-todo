@@ -61,12 +61,13 @@ export default function TodoForm(props: Props) {
     }
   };
 
-  if(type === "update" && item) {
-    useEffect(() => {
+  
+  useEffect(() => {
+    if(type === "update" && item) {
       setTitle(item?.title);
       setBody(item?.body);
-    },[]);
-  }
+    }
+  },[]);
 
   return (
     <div className="todo-item flex item-end justify-between bg-white p-4 border border-slate-200">
