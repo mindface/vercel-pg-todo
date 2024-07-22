@@ -1,14 +1,30 @@
-import { Suspense } from "react";
+"use client"
+import { Suspense, useState, useEffect } from "react";
 import TodoList from "./TodoList";
 import TodoForm from "./TodoForm";
+import { Todo } from "@/model/Todo";
 
 export default function TodoContent() {
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const getTodosAction = async () => {
+    const res = await fetch("/api/todo",{
+      method: "GET"
+    });
+    const resValue = await res.json();
+    console.log(resValue.todos);
+    setTodos(resValue.todos);
+  }
+
+  useEffect( () => {
+    getTodosAction();
+  },[]);
 
   return (
     <div className="todo-content">
       <Suspense fallback={<>loading...</>}>
-        <TodoForm />
-        <TodoList />
+        <TodoForm type="add" getTodosAction={() => {getTodosAction()}} />
+        <TodoList todos={todos} getTodosWhileAction={() => {getTodosAction()}} />
       </Suspense>
     </div>
   );
